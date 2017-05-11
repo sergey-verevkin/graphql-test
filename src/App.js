@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom'
+
+// Assets
 import logo from './logo.svg';
 import './App.css';
+
+// Containers
+import Home from './containers/Home';
+import Article from './containers/Article';
 
 class App extends Component {
   render() {
@@ -10,9 +17,12 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="App-intro">
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route path='/article/:id' component={Article}/>
+          </Switch>
+        </div>
       </div>
     );
   }
