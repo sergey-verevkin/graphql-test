@@ -9,6 +9,9 @@ import './App.css';
 import Home from './containers/Home';
 import Article from './containers/Article';
 
+// Components
+import Pokedex from './components/Pokedex'
+
 class App extends Component {
   render() {
     return (
@@ -21,6 +24,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/article/:id' component={Article}/>
+            <Route path='/pokedex' component={Pokedex}/>
           </Switch>
         </div>
       </div>
