@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import styled from 'styled-components'
+
+import PokemonPreview from './PokemonPreview'
+
+const Title = styled.div`
+  color: #7F7F7F;
+  font-size: 32px;
+  font-weight: 300;
+`;
 
 class Pokedex extends Component {
 
   static propTypes = {
-    data: React.PropTypes.shape({
-      loading: React.PropTypes.bool,
-      error: React.PropTypes.object,
-      Trainer: React.PropTypes.object,
+    data: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      Trainer: PropTypes.object,
     }).isRequired,
   };
 
@@ -24,22 +34,39 @@ class Pokedex extends Component {
 
     return (
       <div className='w-100 bg-light-gray min-vh-100'>
-        <p className='tc pa5'>
-          Hey {this.props.data.Trainer.name}, there are 0 Pokemons in your pokedex
-        </p>
+        <Title className='tc pa5'>
+          Hey {this.props.data.Trainer.name}, there are {this.props.data.Trainer.ownedPokemons.length} Pokemons in your pokedex
+        </Title>
+        <div className='flex flex-wrap justify-center center w-75'>
+          {this.props.data.Trainer.ownedPokemons.map((pokemon) =>
+            <PokemonPreview key={pokemon.id} pokemon={pokemon} />
+          )}
+        </div>
       </div>
     )
   }
 }
 
 const TrainerQuery = gql`
-  query TrainerQuery {
-    Trainer(name: "Sergey Verevkin") {
+  query TrainerQuery($name: String!) {
+    Trainer(name: $name) {
       name
+      ownedPokemons {
+        id
+        name
+        url
+      }
     }
   }
 `;
 
-const PokedexWithData = graphql(TrainerQuery)(Pokedex);
+const PokedexWithData = graphql(TrainerQuery, {
+    options: {
+      variables: {
+        name: 'Sergey Verevkin'
+      }
+    }
+  }
+)(Pokedex);
 
 export default PokedexWithData

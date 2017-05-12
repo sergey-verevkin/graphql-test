@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
     "apollo-client": "^1.2.2",
+    "prop-types": "^15.5.9",
     "react": "^15.5.4",
     "react-apollo": "^1.2.0",
     "react-dom": "^15.5.4",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "styled-components": "^1.4.6",
+    "tachyons": "^4.7.2"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
