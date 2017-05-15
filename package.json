@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "apollo-client": "^1.2.2",
+    "graphql-anywhere": "^3.0.1",
     "prop-types": "^15.5.9",
     "react": "^15.5.4",
     "react-apollo": "^1.2.0",

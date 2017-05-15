@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import { filter } from 'graphql-anywhere'
 
 import PokemonCard from './PokemonCard'
+import PokemonCardHeader from './PokemonCardHeader'
 
 class PokemonPage extends Component {
 
@@ -27,9 +29,11 @@ class PokemonPage extends Component {
       return (<div>An unexpected error occurred</div>)
     }
 
+    const pokemon = this.props.data.Pokemon;
     return (
       <div>
-        <PokemonCard pokemon={this.props.data.Pokemon} handleCancel={this.goBack}/>
+        <PokemonCardHeader pokemon={filter(PokemonCardHeader.fragments.pokemon, pokemon)} />
+        <PokemonCard pokemon={filter(PokemonCard.fragments.pokemon, pokemon)} handleCancel={this.goBack}/>
       </div>
     )
   }
@@ -42,22 +46,20 @@ class PokemonPage extends Component {
 const PokemonQuery = gql`
   query PokemonQuery($id: ID!) {
     Pokemon(id: $id) {
-      id
-      url
-      name
+      ... PokemonCardPokemon
+      ... PokemonCardHeaderPokemon
     }
   }
+  ${PokemonCardHeader.fragments.pokemon}
+  ${PokemonCard.fragments.pokemon}
 `;
 
 const PokemonPageWithData = graphql(PokemonQuery, {
-  options: (ownProps) => {
-    console.log(ownProps);
-    return {
+    options: (ownProps) => ({
       variables: {
         id: ownProps.match.params.pokemonId
       }
-    }
-  }
+    })
   }
 )(PokemonPage);
 

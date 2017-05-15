@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { propType } from 'graphql-anywhere'
+import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -21,9 +23,17 @@ const Card = styled.div`
 `;
 
 export default class PokemonCard extends Component {
+  static fragments = {
+    pokemon: gql`
+      fragment PokemonCardPokemon on Pokemon {
+        url
+        name
+      }
+    `
+  };
 
   static propTypes = {
-    pokemon: PropTypes.object.isRequired,
+    pokemon: propType(PokemonCard.fragments.pokemon).isRequired,
     handleCancel: PropTypes.func.isRequired,
   };
 
