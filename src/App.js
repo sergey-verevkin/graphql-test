@@ -12,6 +12,7 @@ import Article from './containers/Article';
 // Components
 import Pokedex from './components/Pokedex'
 import PokemonPage from './components/PokemonPage'
+import AddPokemonCard from './components/AddPokemonCard'
 
 class App extends Component {
   render() {
@@ -39,7 +40,8 @@ class App extends Component {
             <Route exact path='/' component={Home}/>
             <Route path='/article/:id' component={Article}/>
             <Route exact path='/pokedex' component={Pokedex}/>
-            <Route path='/pokedex/:pokemonId' component={PokemonPage}/>
+            <Route exact path='/pokedex/:pokemonId' component={PokemonPage}/>
+            <Route path='/pokedex/create/:trainerId' component={AddPokemonCard} />
           </Switch>
         </div>
       </div>

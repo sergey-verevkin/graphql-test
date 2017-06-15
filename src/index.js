@@ -11,6 +11,7 @@ import './index.css';
 // Setup Apollo client network connection
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj2j530bqbrr20175k1dd39eg'}),
+  // dataIdFromObject: o => o.id
 });
 
 ReactDOM.render((

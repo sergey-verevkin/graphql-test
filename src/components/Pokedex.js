@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 import styled from 'styled-components'
 
 import PokemonPreview from './PokemonPreview'
+import AddPokemonPreview from './AddPokemonPreview'
 
 const Title = styled.div`
   color: #7F7F7F;
@@ -38,6 +39,7 @@ class Pokedex extends Component {
           Hey {this.props.data.Trainer.name}, there are {this.props.data.Trainer.ownedPokemons.length} Pokemons in your pokedex
         </Title>
         <div className='flex flex-wrap justify-center center w-75'>
+          <AddPokemonPreview trainerId={this.props.data.Trainer.id} />
           {this.props.data.Trainer.ownedPokemons.map((pokemon) =>
             <PokemonPreview key={pokemon.id} pokemon={pokemon} />
           )}
@@ -50,6 +52,7 @@ class Pokedex extends Component {
 const TrainerQuery = gql`
   query TrainerQuery($name: String!) {
     Trainer(name: $name) {
+      id
       name
       ownedPokemons {
         id
