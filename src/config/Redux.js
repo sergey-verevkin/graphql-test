@@ -1,11 +1,15 @@
 import React from 'react';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import reducers from '../reducers'
 import middleware from './reduxMiddlewares'
 
-const store = createStore(reducers, middleware);
+const composeEnhancers = composeWithDevTools({
+  // Specify name here, actionsBlacklist, actionsCreators and other options if needed
+});
+const store = createStore(reducers, /* preloadedState, */ composeEnhancers( middleware ));
 
 store.subscribe(() => {
   console.log("Store changed ", store.getState())
